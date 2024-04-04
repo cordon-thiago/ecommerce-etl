@@ -13,9 +13,6 @@ def test_data():
     df = pd.DataFrame(data=data)
     return df
 
-def test_always_passes():
-    assert True
-
 def test_remove_duplicity(test_data):
     df_transformed = etl.remove_duplicity(test_data, "key_column")
     assert len(df_transformed) == 3
