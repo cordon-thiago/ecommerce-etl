@@ -1,4 +1,4 @@
-name: CI_FLOW
+name: CICD_FLOW
 on: 
   pull_request:
     types:
