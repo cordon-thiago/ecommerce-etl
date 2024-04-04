@@ -60,14 +60,18 @@ The datasets above were selected because they have the most relevant information
 
 ## Config file
 
-Please, use the `etl_params.yml` as a model. In this file you can parametrize for each dataset:
+Please, use the `etl_params.yml` as a model. In this file you can parametrize the following:
 
 Datasets:
 * `source_file`: Dataset file source location.
 * `source_file_params`: Additional file paramateres such as column delimiter (`sep`). Refer to [this](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html) documentation to check the possible parameters.
-* XXXXXX
+* `key_columns`: Columns to be considered as primary keys - used to remode duplicity.
+* `type_cast`: Key:value where key is the pandas datatype and the value a list of columns to be casted to this datatype (reference [here](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.astype.html)).
+* `fill_missing`: Key:value where key is the column name and the value is the value to be filled when missing is encountered (reference [here](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.fillna.html)).
 
 Output:
+* `output_path`: Output path where the parquet files will be saved.
+* `partition_columns`: List of columns to be used to partition the output dataset.
 
 ## Extra questions
 Which features would you extract and how from the tables? How would you use the remaining tables?
