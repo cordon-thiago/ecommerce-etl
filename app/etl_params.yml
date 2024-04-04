@@ -1,0 +1,50 @@
+product:
+  source_file: ../data/raw/olist_products_dataset.csv
+  source_file_params:
+    sep: ","
+  key_columns: 
+    - product_id
+  type_cast:
+    string:
+      - product_id
+      - product_category_name
+  fill_missing:
+    product_category_name: N/A
+order_items:
+  source_file: ../data/raw/olist_order_items_dataset.csv
+  source_file_params:
+    sep: ","
+  key_columns: 
+    - order_id
+    - order_item_id
+    - product_id
+  type_cast:
+    string:
+      - order_id
+      - product_id
+      - seller_id
+    datetime64[ns]:
+      - shipping_limit_date
+    int:
+      - order_item_id
+order:
+  source_file: ../data/raw/olist_orders_dataset.csv
+  source_file_params:
+    sep: ","
+  key_columns: 
+    - order_id
+  type_cast:
+    string:
+      - order_id
+      - customer_id
+      - order_status
+    datetime64[ns]:
+      - order_purchase_timestamp
+      - order_approved_at
+      - order_delivered_carrier_date
+      - order_delivered_customer_date
+      - order_estimated_delivery_date
+output:
+  output_path: ../data/data-lake/order_product_full
+  partition_columns: 
+    - product_category_name

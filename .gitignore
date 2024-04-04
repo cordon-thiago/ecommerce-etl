@@ -1,1 +1,8 @@
 ecommerce-etl
+notebooks
+ecommerce-etl-linux
+docker
+*.csv
+*.parquet
+notes.md
+*.pyc
