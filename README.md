@@ -73,6 +73,14 @@ Output:
 * `output_path`: Output path where the parquet files will be saved.
 * `partition_columns`: List of columns to be used to partition the output dataset.
 
+## Tests
+
+A couple of tests are parametrized to run when a PR is opened. 
+
+Github actions workflow details [here](https://github.com/cordon-thiago/ecommerce-etl/blob/main/.github/workflows/main.yml).
+
+Tests detail [here](https://github.com/cordon-thiago/ecommerce-etl/blob/main/app/tests/test_etl.py).
+
 ## Extra questions
 Which features would you extract and how from the tables? How would you use the remaining tables?
 
