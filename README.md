@@ -44,7 +44,7 @@ The datasets above were selected because they have the most relevant information
 ## How to run the code?
 
 1. Clone the project
-2. Download the following datasets from [Brazilian E-Commerce Public Dataset by Olist | Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) to the folder `/data/raw`
+2. Download the following datasets from [Brazilian E-Commerce Public Dataset by Olist | Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) and extract them to the folder `/data/raw`
     * olist_products_dataset.csv
     * olist_orders_dataset.csv
     * olist_order_items_dataset.csv
@@ -64,9 +64,9 @@ Please, use the `etl_params.yml` as a model. In this file you can parametrize th
 
 Datasets:
 * `source_file`: Dataset file source location.
-* `source_file_params`: Additional file paramateres such as column delimiter (`sep`). Refer to [this](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html) documentation to check the possible parameters.
-* `key_columns`: Columns to be considered as primary keys - used to remode duplicity.
-* `type_cast`: Key:value where key is the pandas datatype and the value a list of columns to be casted to this datatype (reference [here](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.astype.html)).
+* `source_file_params`: Additional file paramaters such as column delimiter (`sep`). Refer to [this](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html) documentation to check the possible parameters.
+* `key_columns`: Columns to be considered as primary keys - used to remove duplicity.
+* `type_cast`: Key:value where key is the pandas datatype and the value is a list of columns to be cast to this datatype (reference [here](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.astype.html)).
 * `fill_missing`: Key:value where key is the column name and the value is the value to be filled when missing is encountered (reference [here](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.fillna.html)).
 
 Output:
@@ -95,7 +95,7 @@ How would you design an application if you knew that you would have to build a s
 
 > I would follow an approach like this (high level):
 > * Each country generates data (CDC / Kafka events /etc) into a storage (Data lake in this image) as they are.
-> * An application reads these raw data and uniformizes them, creating a unique schema. Depending on the level of transformation needed, it can be abstracted into some parametrization file that the application uses in runtime. The output is a uniformized data structure.
+> * An application reads these raw data and uniformizes them, creating a unique schema. Depending on the level of transformation needed, it can be abstracted into some parametrization file and used by the application in runtime. The output is a uniformized data structure.
 > * The uniformized data structure created in the step above is the input for other transformation processes that are required to create a curated dataset, so we don't need to have custom applications for each country because of different inputs.
 > * The process is "plug and play" - to onboard new countries, all we need is to connect this country in the storage and parametrize the new mapping to the uniformized data structure.
 >
