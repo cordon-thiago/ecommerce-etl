@@ -3,39 +3,38 @@ import argparse
 from functions import etl_functions as etl, helper_functions as helper
 
 # Define and parse args
-parser = argparse.ArgumentParser()
+def parse_args():
+    parser = argparse.ArgumentParser()
 
-parser.add_argument(
-    "--param_file",
-    type=str,
-    required=True,
-    help="YML etl parameter file."
-)
+    parser.add_argument(
+        "--param_file",
+        type=str,
+        required=True,
+        help="YML etl parameter file."
+    )
+    
+    return parser.parse_args()
 
-args = parser.parse_args()
+def main():
 
-# Get config
-etl_params = helper.get_config(args.param_file)
+    try:
+        # Log
+        log_file = "etl.log"
+        logger = helper.create_log_handler(__name__, log_file, "INFO")
 
-#load and transform product dataset
-dataset_name = "product"
-product = pd.read_csv(etl_params.get(dataset_name).get("source_file"), **etl_params.get(dataset_name).get("source_file_params"))
-product_transform = etl.apply_transformations(product, etl_params.get(dataset_name))
+        # Get args
+        args = parse_args()
+    
+        # Get config
+        etl_params = helper.get_config(args.param_file)
+        logger.info("Parameters read successfully.")
 
-#load and transform order_items dataset
-dataset_name = "order_items"
-order_items = pd.read_csv(etl_params.get(dataset_name).get("source_file"), **etl_params.get(dataset_name).get("source_file_params"))
-order_items_transform = etl.apply_transformations(order_items, etl_params.get(dataset_name))
+        #run ETL
+        etl.etl_run(etl_params, logger)
+        logger.name = __name__
+        logger.info("ETL finished.")
+    except Exception:
+        logger.exception("Exception occurred.")
 
-#load DF and transform order dataset
-dataset_name = "order"
-order = pd.read_csv(etl_params.get(dataset_name).get("source_file"), **etl_params.get(dataset_name).get("source_file_params"))
-order_transform = etl.apply_transformations(order, etl_params.get(dataset_name))
-
-# join datasets: order_items + order + product
-join_df = order_items_transform.merge(order_transform, on="order_id", how="left").merge(product_transform, on="product_id", how="left")
-
-# Write to parquet
-output_path = etl_params.get("output").get("output_path")
-partition_columns = etl_params.get("output").get("partition_columns")
-join_df.to_parquet(output_path, partition_cols=partition_columns, existing_data_behavior="overwrite_or_ignore")
+if __name__ == "__main__":
+    main()

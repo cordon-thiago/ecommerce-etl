@@ -1,4 +1,5 @@
 import yaml
+import logging
 
 def get_config(yml_file, dataset_name=None):
     """
@@ -14,3 +15,16 @@ def get_config(yml_file, dataset_name=None):
         etl_params = yaml.safe_load(file)
 
     return etl_params[dataset_name] if dataset_name else etl_params
+
+def create_log_handler(job_name, log_file, level):
+    """
+    Creates a log handler.
+    """
+
+    logger = logging.getLogger(job_name)
+    handler = logging.FileHandler(log_file)
+    formatter = logging.Formatter("%(asctime)s - %(name)s - [%(levelname)s] - %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(level)
+    return logger

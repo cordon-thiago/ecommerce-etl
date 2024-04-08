@@ -6,3 +6,4 @@ docker
 *.parquet
 notes.md
 *.pyc
+*.log
