@@ -38,4 +38,4 @@ join_df = order_items_transform.merge(order_transform, on="order_id", how="left"
 # Write to parquet
 output_path = etl_params.get("output").get("output_path")
 partition_columns = etl_params.get("output").get("partition_columns")
-join_df.to_parquet(output_path, partition_cols=partition_columns, existing_data_behavior="overwrite_or_ignore")
+join_df.to_parquet(output_path, partition_cols=partition_columns, existing_data_behavior="delete_matching")
