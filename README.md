@@ -81,6 +81,10 @@ Github actions workflow details [here](https://github.com/cordon-thiago/ecommerc
 
 Tests detail [here](https://github.com/cordon-thiago/ecommerce-etl/blob/main/app/tests/test_etl.py).
 
+## Logging
+
+The application log is available in the `/app/etl.log` file generated when the application runs.
+
 ## Extra questions
 Which features would you extract and how from the tables? How would you use the remaining tables?
 
